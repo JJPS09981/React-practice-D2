@@ -21,13 +21,23 @@ function App() {
 
     setBooks(updateBooks);
   };
+
+  function secureRandomString(length = 12) {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array); // 更隨機、更安全
+    return Array.from(array, (x) => chars[x % chars.length]).join("");
+  }
+
   const handleCreatBook = (title) => {
     const updateBooks = [
       ...books,
-      { id: (Math.random() * 99999).toFixed(0), title: title },
+      { id: secureRandomString(20), title: title },
     ];
 
     if (title !== "") setBooks(updateBooks);
+    console.log(updateBooks);
   };
 
   return (
